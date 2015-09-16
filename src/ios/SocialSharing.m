@@ -62,7 +62,8 @@
   [activityItems addObject:message];
   
   NSMutableArray *files = [[NSMutableArray alloc] init];
-  if (filenames != (id)[NSNull null] && filenames.count > 0) {
+  [self.commandDelegate runInBackground:^{
+      if (filenames != (id)[NSNull null] && filenames.count > 0) {
     for (NSString* filename in filenames) {
       NSObject *file = [self getImage:filename];
       if (file == nil) {
@@ -129,6 +130,7 @@
     }
   }
   [self.viewController presentViewController:activityVC animated:YES completion:nil];
+  }];
 }
 
 - (void)shareViaTwitter:(CDVInvokedUrlCommand*)command {
